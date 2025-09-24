@@ -7,7 +7,7 @@ from typing import Dict
 import aiofiles
 import telebot
 import pytz
-from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, DEBUG, TZ, LANGUAGE
+from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, DEBUG, TZ, LANGUAGE, VERSION
 from utils import setup_logger, generate_trace_id
 
 
@@ -150,7 +150,7 @@ class LogMonitor:
             message = (
                 f"🚨 <b>{translations['tg_intento']}</b>\n\n"
                 f"📅 <b>{translations['tg_fecha_hora']}:</b> {formatted_datetime}\n"
-                f"❌ <b>{translations['tg_motivo']}:</b> Username or password incorrect\n"
+                f"❌ <b>{translations['tg_motivo']}:</b> {translations['tg_motivo_exp']}\n"
                 f"📧 <b>{translations['tg_email']}:</b> {error_data['email']}\n"
                 f"🌐 <b>{translations['tg_ip']}:</b> {error_data['ip']}"
             )
@@ -163,7 +163,7 @@ class LogMonitor:
             
             # Log confirmando el envío del mensaje a Telegram
             if success:
-                logger.info(f"Mensaje enviado a Telegram - Fecha/Hora: {formatted_datetime}, Motivo: Username or password incorrect, Email: {error_data['email']}, IP: {error_data['ip']}")
+                logger.info(f"Mensaje enviado a Telegram - Fecha/Hora: {formatted_datetime}, Motivo: {translations['tg_motivo_exp']}, Email: {error_data['email']}, IP: {error_data['ip']}")
             else:
                 logger.error(f"Error enviando mensaje a Telegram - Fecha/Hora: {formatted_datetime}, Email: {error_data['email']}, IP: {error_data['ip']}")
             
@@ -207,8 +207,10 @@ async def main():
     log_path = "/log/pangolin.log"
     
     logger.info("Iniciando monitor de logs de Pangolin")
+    logger.info(f"Versión: v{VERSION}")
     logger.info(f"Archivo de log: {log_path}")
     logger.info(f"Zona horaria configurada: {TZ}")
+    logger.info(f"Idioma configurado: {LANGUAGE}")
     
     # Crear notificador y monitor
     notifier = TelegramNotifier(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)
@@ -218,7 +220,7 @@ async def main():
     local_zone = pytz.timezone(TZ)
     now_local = datetime.now(local_zone)
     await notifier.send_message(
-        f"✅ <b>{translations['tg_monitor']}</b>\n\n"
+        f"✅ <b>{translations['tg_monitor']}</b> <i>v{VERSION}</i>\n\n"
         f"📁 {translations['tg_monitoreando']}\n"
         f"🕐 {translations['tg_iniciado']}: {now_local.strftime('%d/%m/%Y %H:%M:%S %Z')}\n"
         f"🌍 {translations['tg_zona_horaria']}: {TZ}"

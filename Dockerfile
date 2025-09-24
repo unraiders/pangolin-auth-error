@@ -1,6 +1,6 @@
 FROM alpine:3.21.3
 
-ARG VERSION=0.0.1
+ARG VERSION=0.0.2
 ENV VERSION=${VERSION}
 
 RUN apk add --no-cache python3 py3-pip tzdata

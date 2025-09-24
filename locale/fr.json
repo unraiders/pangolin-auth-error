@@ -6,6 +6,7 @@
     "tg_intento": "Tentative de connexion échouée détectée",
     "tg_fecha_hora": "Date et heure",
     "tg_motivo": "Raison",
+    "tg_motivo_exp": "Nom d'utilisateur ou mot de passe incorrect",    
     "tg_email": "Email",
     "tg_ip": "IP"
 }

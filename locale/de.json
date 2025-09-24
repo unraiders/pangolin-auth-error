@@ -6,6 +6,7 @@
     "tg_intento": "Fehlgeschlagener Anmeldeversuch erkannt",
     "tg_fecha_hora": "Datum und Uhrzeit",
     "tg_motivo": "Grund",
+    "tg_motivo_exp": "Falscher Benutzername oder Passwort",
     "tg_email": "E-Mail",
     "tg_ip": "IP"
 }

@@ -6,6 +6,7 @@
     "tg_intento": "Failed login attempt detected",
     "tg_fecha_hora": "Date and time",
     "tg_motivo": "Reason",
+    "tg_motivo_exp": "Incorrect username or password",    
     "tg_email": "Email",
     "tg_ip": "IP"
 }

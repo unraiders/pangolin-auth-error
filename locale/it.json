@@ -6,6 +6,7 @@
     "tg_intento": "Tentativo di accesso fallito rilevato",
     "tg_fecha_hora": "Data e ora",
     "tg_motivo": "Motivo",
+    "tg_motivo_exp": "Nome utente o password errati",
     "tg_email": "Email",
     "tg_ip": "IP"
 }

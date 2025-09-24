@@ -1,5 +1,5 @@
 # Cambios en esta versión
 
-## Cambios
+## Añadido
 
-- ✨ Versión inicial estable.
+- 🌍 Incorporado soporte Multiidioma mediante la variable LANGUAGE.
