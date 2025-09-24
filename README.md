@@ -135,7 +135,7 @@ Cuando se detecte un intento fallido, recibirás:
 🚨 Intento de login fallido detectado
 
 📅 Fecha y hora: 23/09/2025 21:46:54 CEST
-❌ Motivo: Username or password incorrect
+❌ Motivo: Usuario o contraseña incorrectos
 📧 Email: tuhackerfavorito@thestupidland.com
 🌐 IP: 178.154.10.169
 ```
