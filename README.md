@@ -123,6 +123,19 @@ volumes:
 
 ---
 
+> [!IMPORTANT]
+> Para que Pangolin guarde los logs hay que activarlos en el fichero de config.yml ubicado en /pangolin/config/ quedando así la sección app:
+
+```
+app:
+    dashboard_url: "https://tu_pangolin_url"
+    log_level: "info"
+    save_logs: true
+    log_failed_attempts: true
+    telemetry:
+        anonymous_usage: false
+```
+
 ---
 
 ## 📱 Notificaciones
