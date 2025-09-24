@@ -1,0 +1,11 @@
+{
+    "tg_monitor": "Pangolin Monitor started",
+    "tg_monitoreando": "Monitoring: pangolin.log",
+    "tg_iniciado": "Started",
+    "tg_zona_horaria": "Timezone",
+    "tg_intento": "Failed login attempt detected",
+    "tg_fecha_hora": "Date and time",
+    "tg_motivo": "Reason",
+    "tg_email": "Email",
+    "tg_ip": "IP"
+}

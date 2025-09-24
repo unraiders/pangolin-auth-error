@@ -1,18 +1,48 @@
 import asyncio
 import re
+import json
 from datetime import datetime
 from pathlib import Path
 from typing import Dict
 import aiofiles
 import telebot
 import pytz
-from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, DEBUG, TZ
+from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, DEBUG, TZ, LANGUAGE
 from utils import setup_logger, generate_trace_id
 
 
 logger = setup_logger(__name__)
 
 
+def load_translations(language: str = 'ES') -> Dict[str, str]:
+    """Carga las traducciones desde el archivo JSON correspondiente"""
+    try:
+        locale_file = Path(__file__).parent / 'locale' / f'{language.lower()}.json'
+        
+        # Si el idioma solicitado no existe, usar español por defecto
+        if not locale_file.exists():
+            logger.warning(f"Archivo de idioma no encontrado: {locale_file}, usando español por defecto")
+            locale_file = Path(__file__).parent / 'locale' / 'es.json'
+            language = 'ES'  # Actualizar el idioma para el log
+        
+        with open(locale_file, 'r', encoding='utf-8') as f:
+            translations = json.load(f)
+        
+        logger.info(f"Traducciones cargadas para idioma: {language}")
+        return translations
+        
+    except Exception as e:
+        logger.error(f"Error cargando traducciones: {e}")
+        # Si hay error incluso con el archivo español, cargar desde el archivo es.json directamente
+        try:
+            es_file = Path(__file__).parent / 'locale' / 'es.json'
+            with open(es_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as es_error:
+            logger.error(f"Error crítico: No se pudo cargar el archivo es.json: {es_error}")
+            raise
+
+translations = load_translations(LANGUAGE)
 class TelegramNotifier:
     """Clase para enviar notificaciones a Telegram"""
     
@@ -116,13 +146,13 @@ class LogMonitor:
             dt_local = dt_utc.replace(tzinfo=utc_zone).astimezone(local_zone)
             formatted_datetime = dt_local.strftime('%d/%m/%Y %H:%M:%S %Z')
             
-            # Crear mensaje
+            # Crear mensaje usando traducciones
             message = (
-                "🚨 <b>Intento de login fallido detectado</b>\n\n"
-                f"📅 <b>Fecha y hora:</b> {formatted_datetime}\n"
-                f"❌ <b>Motivo:</b> Username or password incorrect\n"
-                f"📧 <b>Email:</b> {error_data['email']}\n"
-                f"🌐 <b>IP:</b> {error_data['ip']}"
+                f"🚨 <b>{translations['tg_intento']}</b>\n\n"
+                f"📅 <b>{translations['tg_fecha_hora']}:</b> {formatted_datetime}\n"
+                f"❌ <b>{translations['tg_motivo']}:</b> Username or password incorrect\n"
+                f"📧 <b>{translations['tg_email']}:</b> {error_data['email']}\n"
+                f"🌐 <b>{translations['tg_ip']}:</b> {error_data['ip']}"
             )
             
             # Log detallado antes de enviar el mensaje
@@ -184,14 +214,14 @@ async def main():
     notifier = TelegramNotifier(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)
     monitor = LogMonitor(log_path, notifier)
     
-    # Enviar mensaje de inicio con zona horaria local
+    # Enviar mensaje de inicio con zona horaria local usando traducciones
     local_zone = pytz.timezone(TZ)
     now_local = datetime.now(local_zone)
     await notifier.send_message(
-        "✅ <b>Monitor de Pangolin iniciado</b>\n\n"
-        f"📁 Monitoreando: pangolin.log\n"
-        f"🕐 Iniciado: {now_local.strftime('%d/%m/%Y %H:%M:%S %Z')}\n"
-        f"🌍 Zona horaria: {TZ}"
+        f"✅ <b>{translations['tg_monitor']}</b>\n\n"
+        f"📁 {translations['tg_monitoreando']}\n"
+        f"🕐 {translations['tg_iniciado']}: {now_local.strftime('%d/%m/%Y %H:%M:%S %Z')}\n"
+        f"🌍 {translations['tg_zona_horaria']}: {TZ}"
     )
     
     # Iniciar monitoreo

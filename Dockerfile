@@ -16,6 +16,8 @@ COPY utils.py .
 
 COPY log_monitor.py .
 
+COPY locale/ ./locale/
+
 COPY entrypoint.sh .
 RUN chmod +x /app/entrypoint.sh
 

@@ -10,6 +10,7 @@ Sistema de monitoreo en tiempo real para detectar intentos de login fallidos en 
 - ✅ **Extracción Automática**: Captura fecha/hora, email e IP de los logs
 - ✅ **Notificaciones Instantáneas**: Alertas inmediatas vía Telegram
 - ✅ **Zona Horaria Inteligente**: Conversión automática UTC → Hora Local
+- ✅ **Soporte Multiidioma** Especificado mediante la variable LANGUAGE
 
 ---
 
@@ -28,6 +29,7 @@ Sistema de monitoreo en tiempo real para detectar intentos de login fallidos en 
 | :--: | :----------------- | :-------: | :-----: | :------------------------------------------------------------------------------------------------ |
 |  🤖  | TELEGRAM_BOT_TOKEN |    ✅     | v0.0.1  | Telegram Bot Token.                                                                               |
 |  🤖  | TELEGRAM_CHAT_ID   |    ✅     | v0.0.1  | Telegram Chat ID.                                                                                 |
+|  🌍  | LANGUAGE           |    ✅     | v0.0.2  | Idioma para mensajes de Telegram                                                                  |
 |  🐛  | DEBUG              |    ✅     | v0.0.1  | Habilita el modo Debug en el log. (0 = No / 1 = Si)                                               |
 |  🌍  | TZ                 |    ✅     | v0.0.1  | Timezone (Por ejemplo: Europe/Madrid) Localizar zona horaria https://www.zeitverschiebung.net/es/ |
 
@@ -49,6 +51,7 @@ services:
     environment:
       - TELEGRAM_BOT_TOKEN=
       - TELEGRAM_CHAT_ID=
+      - LANGUAGE=
       - DEBUG=
       - TZ=
     volumes:
@@ -69,6 +72,7 @@ services:
     environment:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - LANGUAGE=${LANGUAGE}
       - DEBUG=${DEBUG}
       - TZ=${TZ}
     volumes:
@@ -84,6 +88,7 @@ services:
 ```yaml
 TELEGRAM_BOT_TOKEN=
 TELEGRAM_CHAT_ID=
+LANGUAGE=
 DEBUG=0
 TZ=Europe/Madrid
 ```
@@ -132,8 +137,26 @@ Cuando se detecte un intento fallido, recibirás:
 📅 Fecha y hora: 23/09/2025 21:46:54 CEST
 ❌ Motivo: Username or password incorrect
 📧 Email: tuhackerfavorito@thestupidland.com
-🌐 IP: 192.168.1.100
+🌐 IP: 178.154.10.169
 ```
+
+---
+
+## 🌐 Soporte Multiidioma
+
+El sistema soporta mensajes de notificación en diferentes idiomas. Configura la variable `LANGUAGE` en tu archivo `.env` o docker-compose.yml:
+
+### Idiomas Disponibles
+
+| Código | Idioma   | Ejemplo de Mensaje de Inicio   |
+| ------ | -------- | ------------------------------ |
+| `ES`   | Español  | "Monitor de Pangolin iniciado" |
+| `EN`   | Inglés   | "Pangolin Monitor started"     |
+| `DE`   | Alemán   | "Pangolin-Monitor gestartet"   |
+| `IT`   | Italiano | "Monitor Pangolin avviato"     |
+| `FR`   | Italiano | "Moniteur Pangolin démarré"    |
+
+> **Nota**: Si especificas un idioma no soportado, el sistema usará español (ES) por defecto.
 
 ---
 
