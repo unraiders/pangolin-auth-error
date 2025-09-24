@@ -1,0 +1,13 @@
+services:
+  pangolin-auth-error:
+    image: unraiders/pangolin-auth-error
+    container_name: pangolin-auth-error
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - DEBUG=${DEBUG}
+      - TZ=${TZ}
+    volumes:
+      - /ruta/real/log/pangolin:/log:ro
+    network_mode: bridge
+    restart: unless-stopped
