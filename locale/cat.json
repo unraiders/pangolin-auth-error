@@ -1,0 +1,19 @@
+{
+    "tg_monitor": "Monitor de Pangolin iniciat",
+    "tg_monitoreando": "Monitorant: pangolin.log",
+    "tg_iniciado": "Iniciat",
+    "tg_zona_horaria": "Zona horària",
+    "tg_intento": "Intent d'inici de sessió fallit detectat",
+    "tg_fecha_hora": "Data i hora",
+    "tg_motivo": "Motiu",
+    "tg_motivo_exp": "Usuari o contrasenya incorrectes",
+    "tg_email": "Correu electrònic",
+    "tg_recurso": "ID de recurs",
+    "tg_ip": "IP",
+    "error_translations": {
+        "Username or password incorrect": "Usuari o contrasenya incorrectes",
+        "Resource password incorrect": "Contrasenya del recurs incorrecta",
+        "Two-factor code incorrect": "Codi de dos factors incorrecte",
+        "Resource pin code incorrect": "Codi PIN del recurs incorrecte"
+    }
+}

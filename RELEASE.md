@@ -2,4 +2,4 @@
 
 ## Añadido
 
-- 🦺 Añadidos nuevos supuestos de mensajes de error a capturar para notificar en Telegram.
+- 💬 Añadidos nuevos idiomas en las notificaciones a Telegram (Catalán, Euskera, Gallego y Ruso).

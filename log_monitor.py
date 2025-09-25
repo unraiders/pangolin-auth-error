@@ -9,6 +9,7 @@ import pytz
 from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, DEBUG, TZ, LANGUAGE, VERSION
 from utils import setup_logger, generate_trace_id, load_error_types, build_error_patterns, match_auth_error, get_translated_error
 
+VERSION = "0.0.4"
 
 logger = setup_logger(__name__)
 

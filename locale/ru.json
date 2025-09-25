@@ -1,0 +1,19 @@
+{
+    "tg_monitor": "Монитор Pangolin запущен",
+    "tg_monitoreando": "Мониторинг: pangolin.log",
+    "tg_iniciado": "Запущено",
+    "tg_zona_horaria": "Часовой пояс",
+    "tg_intento": "Обнаружена неудачная попытка входа",
+    "tg_fecha_hora": "Дата и время",
+    "tg_motivo": "Причина",
+    "tg_motivo_exp": "Неверное имя пользователя или пароль",
+    "tg_email": "Электронная почта",
+    "tg_recurso": "ID ресурса",
+    "tg_ip": "IP",
+    "error_translations": {
+        "Username or password incorrect": "Неверное имя пользователя или пароль",
+        "Resource password incorrect": "Неверный пароль ресурса",
+        "Two-factor code incorrect": "Неверный код двухфакторной аутентификации",
+        "Resource pin code incorrect": "Неверный PIN-код ресурса"
+    }
+}

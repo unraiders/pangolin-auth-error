@@ -1,0 +1,19 @@
+{
+    "tg_monitor": "Monitor de Pangolin iniciado",
+    "tg_monitoreando": "Monitorizando: pangolin.log",
+    "tg_iniciado": "Iniciado",
+    "tg_zona_horaria": "Zona horaria",
+    "tg_intento": "Intento de inicio de sesión fallido detectado",
+    "tg_fecha_hora": "Data e hora",
+    "tg_motivo": "Motivo",
+    "tg_motivo_exp": "Usuario ou contrasinal incorrectos",
+    "tg_email": "Correo electrónico",
+    "tg_recurso": "ID de recurso",
+    "tg_ip": "IP",
+    "error_translations": {
+        "Username or password incorrect": "Usuario ou contrasinal incorrectos",
+        "Resource password incorrect": "Contrasinal do recurso incorrecto",
+        "Two-factor code incorrect": "Código de dous factores incorrecto",
+        "Resource pin code incorrect": "Código PIN do recurso incorrecto"
+    }
+}

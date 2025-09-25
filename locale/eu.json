@@ -1,0 +1,20 @@
+{
+    "tg_monitor": "Pangolin monitore abiarazia",
+    "tg_monitoreando": "Monitorizatzen: pangolin.log",
+    "tg_iniciado": "Hasita",
+    "tg_zona_horaria": "Ordu-eremua",
+    "tg_intento": "Saio-hasierako huts egindako saiakera atzeman da",
+    "tg_fecha_hora": "Data eta ordua",
+    "tg_motivo": "Arrazoia",
+    "tg_motivo_exp": "Erabiltzailea edo pasahitza okerrak",
+    "tg_email": "Posta elektronikoa",
+    "tg_recurso": "Baliabidearen IDa",
+    "tg_ip": "IP",
+    "error_translations": {
+        "Username or password incorrect": "Erabiltzailea edo pasahitza okerrak",
+        "Resource password incorrect": "Baliabidearen pasahitza okerra",
+        "Two-factor code incorrect": "Bi faktoreko kodea okerra",
+        "Resource pin code incorrect": "Baliabidearen PIN kodea okerra"
+    }
+}
+

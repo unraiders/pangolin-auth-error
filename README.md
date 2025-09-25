@@ -168,6 +168,10 @@ El sistema soporta mensajes de notificación en diferentes idiomas. Configura la
 | `DE`   | Alemán   | "Pangolin-Monitor gestartet"   |
 | `IT`   | Italiano | "Monitor Pangolin avviato"     |
 | `FR`   | Francés  | "Moniteur Pangolin démarré"    |
+| `CAT`  | Catalán  | "Monitor de Pangolin iniciat"  |
+| `GAL`  | Gallego  | "Monitor de Pangolin iniciado" |
+| `EU`   | Euskera  | "Pangolin monitore abiarazia"  |
+| `RU`   | Ruso     | "Монитор Pangolin запущен"     |
 
 > **Nota**: Si especificas un idioma no soportado, el sistema usará español (ES) por defecto.
 
