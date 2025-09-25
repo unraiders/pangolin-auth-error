@@ -1,0 +1,26 @@
+{
+  "Username or password incorrect": {
+    "fields": ["Email", "IP"],
+    "pattern": "Username or password incorrect\\.\\s+Email:\\s*(?P<email>[^\\s,;]+?)\\.?\\s*IP:\\s*(?P<ip>[\\d.]+)",
+    "notification_key": "email",
+    "resource_type": "email"
+  },
+  "Resource password incorrect": {
+    "fields": ["Resource ID", "IP"],
+    "pattern": "Resource password incorrect\\.\\s+Resource ID:\\s*(?P<resource_id>[^\\s,;]+?)\\.?\\s*IP:\\s*(?P<ip>[\\d.]+)",
+    "notification_key": "resource_id",
+    "resource_type": "resource"
+  },
+  "Two-factor code incorrect": {
+    "fields": ["Email", "IP"],
+    "pattern": "Two-factor code incorrect\\.\\s+Email:\\s*(?P<email>[^\\s,;]+?)\\.?\\s*IP:\\s*(?P<ip>[\\d.]+)",
+    "notification_key": "email",
+    "resource_type": "email"
+  },
+  "Resource pin code incorrect": {
+    "fields": ["Resource ID", "IP"],
+    "pattern": "Resource pin code incorrect\\.\\s+Resource ID:\\s*(?P<resource_id>[^\\s,;]+?)\\.?\\s*IP:\\s*(?P<ip>[\\d.]+)",
+    "notification_key": "resource_id",
+    "resource_type": "resource"
+  }
+}

@@ -2,4 +2,4 @@
 
 ## Añadido
 
-- 🌍 Incorporado soporte Multiidioma mediante la variable LANGUAGE.
+- 🦺 Añadidos nuevos supuestos de mensajes de error a capturar para notificar en Telegram.

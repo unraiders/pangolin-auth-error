@@ -1,6 +1,6 @@
 FROM alpine:3.21.3
 
-ARG VERSION=0.0.2
+ARG VERSION=0.0.3
 ENV VERSION=${VERSION}
 
 RUN apk add --no-cache python3 py3-pip tzdata
@@ -13,6 +13,7 @@ RUN pip install --break-system-packages --no-cache-dir -r requirements.txt
 
 COPY config.py .
 COPY utils.py .
+COPY tipos_error.json .
 
 COPY log_monitor.py .
 

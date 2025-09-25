@@ -3,6 +3,7 @@
 .env
 .venv
 README.md
+DYNAMIC_ERROR_SYSTEM.md
 *.pyc
 __pycache__
 .pytest_cache

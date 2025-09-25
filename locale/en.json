@@ -8,5 +8,12 @@
     "tg_motivo": "Reason",
     "tg_motivo_exp": "Incorrect username or password",    
     "tg_email": "Email",
-    "tg_ip": "IP"
+    "tg_recurso": "Resource ID",
+    "tg_ip": "IP",
+    "error_translations": {
+        "Username or password incorrect": "Username or password incorrect",
+        "Resource password incorrect": "Resource password incorrect",
+        "Two-factor code incorrect": "Two-factor code incorrect",
+        "Resource pin code incorrect": "Resource pin code incorrect"
+    }
 }

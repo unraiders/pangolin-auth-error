@@ -1,5 +1,4 @@
 import asyncio
-import re
 import json
 from datetime import datetime
 from pathlib import Path
@@ -8,7 +7,7 @@ import aiofiles
 import telebot
 import pytz
 from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, DEBUG, TZ, LANGUAGE, VERSION
-from utils import setup_logger, generate_trace_id
+from utils import setup_logger, generate_trace_id, load_error_types, build_error_patterns, match_auth_error, get_translated_error
 
 
 logger = setup_logger(__name__)
@@ -76,14 +75,11 @@ class LogMonitor:
         self.notifier = notifier
         self.last_position = 0
         
-        # Patrón regex para detectar errores de autenticación
-        # ESTRICTO: Solo detecta exactamente "Username or password incorrect" (sin variaciones)
-        self.auth_error_pattern = re.compile(
-            r'(?P<datetime>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z).*?'
-            r'Username or password incorrect\.\s+'  # Exactamente esta frase seguida de punto y espacio
-            r'Email:\s*(?P<email>[^\s,;]+?)\.?\s*'
-            r'IP:\s*(?P<ip>[\d.]+)'
-        )
+        # Cargar configuración de tipos de error
+        self.error_types = load_error_types()
+        self.error_patterns = build_error_patterns(self.error_types)
+        
+        logger.info(f"Cargados {len(self.error_patterns)} tipos de error: {', '.join(self.error_types.keys())}")
         
     async def check_log_file(self) -> None:
         """Revisa el archivo de log en busca de nuevas entradas"""
@@ -127,13 +123,14 @@ class LogMonitor:
                 
     async def check_auth_error(self, line: str) -> None:
         """Verifica si una línea contiene un error de autenticación"""
-        match = self.auth_error_pattern.search(line)
+        result = match_auth_error(line, self.error_patterns)
         
-        if match:
-            error_data = match.groupdict()
-            await self.send_auth_error_notification(error_data)
+        if result:
+            error_type, error_data = result
+            error_config = self.error_types[error_type]
+            await self.send_auth_error_notification(error_type, error_data, error_config)
             
-    async def send_auth_error_notification(self, error_data: Dict[str, str]) -> None:
+    async def send_auth_error_notification(self, error_type: str, error_data: Dict[str, str], error_config: Dict) -> None:
         """Envía notificación de error de autenticación"""
         try:
             # Convertir la fecha y hora de UTC a la zona horaria configurada
@@ -146,29 +143,64 @@ class LogMonitor:
             dt_local = dt_utc.replace(tzinfo=utc_zone).astimezone(local_zone)
             formatted_datetime = dt_local.strftime('%d/%m/%Y %H:%M:%S %Z')
             
+            # Determinar el tipo de recurso y valor
+            notification_key = error_config['notification_key']
+            resource_type = error_config['resource_type']
+            resource_value = error_data.get(notification_key, 'N/A')
+            
+            # Traducir el tipo de error
+            translated_error = get_translated_error(error_type, translations)
+            
+            # Seleccionar etiqueta según el tipo de recurso
+            if resource_type == 'email':
+                resource_label = translations['tg_email']
+                resource_icon = "📧"
+            else:
+                resource_label = translations['tg_recurso']
+                resource_icon = "🔑"
+            
             # Crear mensaje usando traducciones
             message = (
                 f"🚨 <b>{translations['tg_intento']}</b>\n\n"
                 f"📅 <b>{translations['tg_fecha_hora']}:</b> {formatted_datetime}\n"
-                f"❌ <b>{translations['tg_motivo']}:</b> {translations['tg_motivo_exp']}\n"
-                f"📧 <b>{translations['tg_email']}:</b> {error_data['email']}\n"
+                f"❌ <b>{translations['tg_motivo']}:</b> {translated_error}\n"
+                f"{resource_icon} <b>{resource_label}:</b> {resource_value}\n"
                 f"🌐 <b>{translations['tg_ip']}:</b> {error_data['ip']}"
             )
             
             # Log detallado antes de enviar el mensaje
-            logger.info(f"Detectado intento fallido: {error_data['email']} desde {error_data['ip']} a las {formatted_datetime}")
+            logger.info(f"Detectado intento fallido: {translated_error} - {resource_value} desde {error_data['ip']} a las {formatted_datetime}")
             
             # Enviar mensaje a Telegram
             success = await self.notifier.send_message(message)
             
             # Log confirmando el envío del mensaje a Telegram
             if success:
-                logger.info(f"Mensaje enviado a Telegram - Fecha/Hora: {formatted_datetime}, Motivo: {translations['tg_motivo_exp']}, Email: {error_data['email']}, IP: {error_data['ip']}")
+                logger.info(f"Mensaje enviado a Telegram - Fecha/Hora: {formatted_datetime}, Motivo: {translated_error}, {resource_label}: {resource_value}, IP: {error_data['ip']}")
             else:
-                logger.error(f"Error enviando mensaje a Telegram - Fecha/Hora: {formatted_datetime}, Email: {error_data['email']}, IP: {error_data['ip']}")
+                logger.error(f"Error enviando mensaje a Telegram - Fecha/Hora: {formatted_datetime}, {resource_label}: {resource_value}, IP: {error_data['ip']}")
             
         except Exception as e:
             logger.error(f"Error procesando notificación: {e}")
+    
+    def reload_error_types(self) -> bool:
+        """Recarga los tipos de error desde el archivo JSON"""
+        try:
+            new_error_types = load_error_types()
+            new_patterns = build_error_patterns(new_error_types)
+            
+            if new_patterns:
+                self.error_types = new_error_types
+                self.error_patterns = new_patterns
+                logger.info(f"Tipos de error recargados exitosamente: {', '.join(self.error_types.keys())}")
+                return True
+            else:
+                logger.error("No se pudieron cargar los nuevos tipos de error")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error recargando tipos de error: {e}")
+            return False
             
     async def start_monitoring(self, check_interval: int = 5) -> None:
         """Inicia el monitoreo del archivo de log"""

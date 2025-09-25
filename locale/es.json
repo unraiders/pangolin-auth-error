@@ -8,5 +8,12 @@
     "tg_motivo": "Motivo",
     "tg_motivo_exp": "Usuario o contraseña incorrectos",
     "tg_email": "Email",
-    "tg_ip": "IP"
+    "tg_recurso": "Recurso ID",
+    "tg_ip": "IP",
+    "error_translations": {
+        "Username or password incorrect": "Usuario o contraseña incorrectos",
+        "Resource password incorrect": "Contraseña de recurso incorrecta",
+        "Two-factor code incorrect": "Código de dos factores incorrecto",
+        "Resource pin code incorrect": "Código PIN de recurso incorrecto"
+    }
 }
